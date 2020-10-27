@@ -1,0 +1,35 @@
+---
+- hosts: all
+  become: true
+
+  vars:
+    build_root: /vagrant/provisioning
+
+  pre_tasks:
+    - name: Update apt cache if needed.
+      apt: update_cache=yes cache_valid_time=3600
+    - shell: mkdir -p /vagrant/provisioning
+    - name: Copy file with owner and permissions
+      copy:
+        src: "{{ item }}"
+        dest: /vagrant/provisioning
+        owner: nowhereman
+        group: nowhereman
+        mode: '0644'
+      with_items:
+        - data
+        - db
+        - www
+      tags:
+        - deploy
+
+  roles:
+    - role: geerlingguy.docker
+
+  tasks:
+    - import_tasks: setup.yml
+    - import_tasks: docker.yml
+      tags: deploy
+
+
+
