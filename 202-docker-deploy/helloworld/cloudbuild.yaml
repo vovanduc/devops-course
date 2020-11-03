@@ -1,0 +1,13 @@
+steps:
+- name: 'gcr.io/cloud-builders/gcloud'
+  args:
+  - 'run'
+  - 'deploy'
+  - 'qs-image'
+  - '--image'
+  - 'gcr.io/peerless-trees-291001/quickstart-image'
+  - '--region'
+  - 'asia-southeast1'
+  - '--platform'
+  - 'managed'
+  - '--allow-unauthenticated'
