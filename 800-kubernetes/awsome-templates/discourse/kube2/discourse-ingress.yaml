@@ -1,0 +1,25 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: discourse-ingress
+  # annotations:
+  #   nginx.ingress.kubernetes.io/rewrite-target: /$1
+spec:
+  rules:
+    - host: www.example.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: discourse
+                port:
+                  number: 3000
+          - path: /v2
+            pathType: Prefix
+            backend:
+              service:
+                name: web
+                port:
+                  number: 8080                  
